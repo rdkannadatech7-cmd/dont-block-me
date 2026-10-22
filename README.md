@@ -22,8 +22,5 @@ checked against your answers.
 The scoreboard starts empty and lists only people who have played the quiz in this browser. Notes: avatar art on
 the scoreboard uses emoji (the original avatar images weren't in the zip); a few answer
 photos differ slightly from the video where the original image files weren't included.
-<<<<<<< HEAD
-=======
 
 https://rdkannadatech7-cmd.github.io/dont-block-me/
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37

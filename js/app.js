@@ -51,7 +51,6 @@
     var w = document.createTreeWalker($("#screen-home"), NodeFilter.SHOW_TEXT), n, list = [];
     while ((n = w.nextNode())) if (n.nodeValue.indexOf(D.defaultOwner) > -1) list.push(n);
     list.forEach(function (t) { t.nodeValue = t.nodeValue.split(D.defaultOwner).join(S.owner); });
-<<<<<<< HEAD
     $$("[aria-label]", $("#screen-home")).forEach(function (e) { e.setAttribute("aria-label", e.getAttribute("aria-label").split(D.defaultOwner).join(S.owner)); });
     document.title = "Will " + S.owner + " block you? - Don't Block Me";
   }
@@ -89,16 +88,6 @@
   function boardKey() { return "dbm:scores:" + S.owner.toLowerCase(); }
   function boardData() {
     var mine = (REMOTE ? REMOTE.slice() : store.get(boardKey(), []));
-=======
-    $$("[aria-label]", $("#screen-home")).forEach(function (e) { e.setAttribute("aria-label", e.getAttribute("aria-label").split("Meghana M").join(S.owner)); });
-    document.title = "Will " + S.owner + " block you? - Don't Block Me";
-  }
-
-  /* ---------- scoreboard ---------- */
-  function boardKey() { return "dbm:scores:" + S.owner.toLowerCase(); }
-  function boardData() {
-    var mine = store.get(boardKey(), []);
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
     mine.sort(function (a, b) { return b.s - a.s || a.t - b.t; });
     return mine;
   }
@@ -108,11 +97,7 @@
       '<div class="sb-count">' + data.length + " friend" + (data.length === 1 ? "" : "s") + " played</div>";
     if (!data.length) html += '<p class="sb-more">nobody has played yet — be the first! 🎉</p>';
     top.forEach(function (r, i) {
-<<<<<<< HEAD
       var me = S.lastId ? r.id === S.lastId : (S.lastPlay && r.t === S.lastPlay);
-=======
-      var me = S.lastPlay && r.t === S.lastPlay;
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
       html += '<div class="sb-row' + (me ? " me" : "") + '" style="animation-delay:' + i * 60 + 'ms">' +
         (i < 3 ? '<span class="sb-rank n' + (i + 1) + '">' + (i + 1) + "</span>" : "") +
         '<div class="sb-ava" style="background:' + r.c + '">' + r.a + "</div>" +
@@ -159,11 +144,7 @@
   }
   function renderQ(first) {
     var q = D.questions[S.i], body = $("#qbody"), create = S.mode === "create";
-<<<<<<< HEAD
     $$("#quiz-prog span").forEach(function (s, i) { var bad = i < S.i && S.mode === "play" && (D.prank || S.picks[i] !== answerOf(i));
-=======
-    $$("#quiz-prog span").forEach(function (s, i) { var bad = i < S.i && S.mode === "play" && S.picks[i] !== answerOf(i);
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
       s.className = i < S.i ? (bad ? "wrong" : "done") : i === S.i ? "cur" : ""; s.textContent = i < S.i ? (bad ? "✕" : "✓") : i + 1; });
     var dd = "";
     for (var k = 0; k < 5; k++) {
@@ -187,19 +168,12 @@
     var wrap = $(".qopts"); if (wrap.classList.contains("lock")) return;
     wrap.classList.add("lock");
     S.picks[S.i] = j;
-<<<<<<< HEAD
     var wrong = S.mode === "play" && (D.prank || j !== answerOf(S.i));
     if (wrong) {
       btn.classList.add("bad"); btn.querySelector(".tick").textContent = "✕";
       // prank: the "correct" answer is always whichever option the player did NOT pick
       var goodIdx = D.prank ? 1 - j : answerOf(S.i);
       var good = $$(".opt", wrap)[goodIdx]; later(function () { good.classList.add("good"); }, 380);
-=======
-    var wrong = S.mode === "play" && j !== answerOf(S.i);
-    if (wrong) {
-      btn.classList.add("bad"); btn.querySelector(".tick").textContent = "✕";
-      var good = $$(".opt", wrap)[answerOf(S.i)]; later(function () { good.classList.add("good"); }, 380);
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
     } else btn.classList.add("sel");
     later(function () {
       $("#qbody").classList.add("out");
@@ -213,7 +187,6 @@
     if (S.mode === "create") return finishCreate();
     var score = 0;
     S.picks.forEach(function (p, i) { if (p === answerOf(i)) score++; });
-<<<<<<< HEAD
     S.realScore = score;                 // the true result (saved to the scoreboard only)
     S.score = D.prank ? 0 : score;       // what the result screen shows
     var av = D.avatars[Math.floor(Math.random() * D.avatars.length)];
@@ -223,14 +196,6 @@
     store.set(boardKey(), list);                 // local fallback copy
     S.lastId = null;
     saveResult(av).then(function (id) { S.lastId = id; return loadBoard(); });   // database copy
-=======
-    S.score = score;
-    var av = D.avatars[Math.floor(Math.random() * D.avatars.length)];
-    var list = store.get(boardKey(), []);
-    S.lastPlay = Date.now();
-    list.push({ n: S.player, s: score, a: av[0], c: av[1], t: S.lastPlay });
-    store.set(boardKey(), list);
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
     show("screen-loading");
     later(playResult, 1400);
   }
@@ -354,10 +319,7 @@
     decodeHash();
     applyOwner();
     renderBoard("#home-board");
-<<<<<<< HEAD
     loadBoard();
-=======
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
 
     // home
     var start = $('[aria-label^="Start"]'); if (start) start.addEventListener("click", function () { openName("play"); });
@@ -393,11 +355,7 @@
       });
     });
     $("#share-play").addEventListener("click", function () { location.href = this.dataset.url; location.reload(); });
-<<<<<<< HEAD
     $("#res-again").addEventListener("click", function () { show("screen-home"); renderBoard("#home-board"); loadBoard(); });
-=======
-    $("#res-again").addEventListener("click", function () { show("screen-home"); renderBoard("#home-board"); });
->>>>>>> f7d9d298f3a7e22f480d973c582fdd3e7256ae37
     window.addEventListener("hashchange", function () { location.reload(); });
     show("screen-home");
   }
